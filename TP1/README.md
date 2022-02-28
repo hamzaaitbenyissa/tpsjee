@@ -3,7 +3,7 @@
 ## Sommaire
 
 - [Créer l'interface IDao](#Créer-linterface-IDao)
-- [Créer une implémentation de cette interface](#créer-une-implémentation-de-cette-interfacet)
+- [Créer une implémentation de cette interface](#créer-une-implémentation-de-cette-interface)
 - [Créer l'interface IMetier](#Créer-linterface-IMetier)
 - [Créer une implémentation de cette interface en utilisant le couplage faible](#Créer-une-implémentation-de-cette-interface-en-utilisant-le-couplage-faible)
 - [Faire l'injection des dépendances](#faire-linjection-des-dépendances) 
