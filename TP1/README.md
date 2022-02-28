@@ -3,10 +3,10 @@
 ## Sommaire
 
 - [Créer l'interface IDao](#Créer-linterface-IDao)
-- [Créer une implémentation de cette interface](#comment-fonctionne-git)
+- [Créer une implémentation de cette interface](#créer-une-implémentation-de-cette-interfacet)
 - [Créer l'interface IMetier](#Créer-linterface-IMetier)
 - [Créer une implémentation de cette interface en utilisant le couplage faible](#Créer-une-implémentation-de-cette-interface-en-utilisant-le-couplage-faible)
-- [Faire l'injection des dépendances](#Fairelinjection-des-dépendances)
+- [Faire l'injection des dépendances](#faire-linjection-des-dépendances) 
   - [Par instanciation statique](#Par-instanciation-statique)
   - [Par instanciation dynamique](#Par-instanciation-dynamique)
   - [En utilisant le Framework Spring](#En-utilisant-le-Framework-Spring)
