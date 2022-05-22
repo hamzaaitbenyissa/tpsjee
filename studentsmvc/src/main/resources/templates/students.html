@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{template.html}">
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="row rowPanel">
+            <div class="col-md-offset-1 col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+
+                            <div class="col-sm-9 col-xs-12 text-right">
+                                <div class="btn_group">
+                                    <form action="get" th:action="@{index}">
+                                        <input th:value="${keyword}" type="text" name="keyword" class="form-control"
+                                               placeholder="Search">
+                                        <button class="btn btn-default" type="submit" title="search">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div sec:authorize="hasAuthority('ADMIN')" class="col col-sm-3 col-xs-12">
+                                <h4 class="AddSection">
+                                    <a th:href="@{formStudents}">
+                                        Add Student <i
+                                            class="bi bi-person-plus"></i></a>
+                                </h4>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table" style="text-align:center">
+                            <thead>
+                            <tr>
+
+                                <th></th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Email</th>
+                                <th>Date Naissance</th>
+                                <th>Genre</th>
+                                <th>est en regle?</th>
+                                <th sec:authorize="hasAuthority('ADMIN')">Actions</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="S:${students}">
+                                <td th:text="${S.id}"></td>
+                                <td th:text="${S.nom}"></td>
+                                <td th:text="${S.prenom}"></td>
+                                <td th:text="${S.email}"></td>
+                                <td th:text="${S.datenaissance}"></td>
+                                <td>
+                                    <span style="font-size: 1.3em;"
+                                          th:if=" ${S.getGenre().name()}=='MASCULIN'">👨‍🎓</span>
+                                    <span style="font-size: 1.3em;"
+                                          th:if="${S.getGenre().name()}=='FEMININ'">👩‍🎓 </span>
+                                </td>
+                                <td style="font-size: 1.3em;" th:text="${S.enregle}? '✔' : '❌'"></td>
+
+                                <td>
+                                    <ul class="action-list">
+
+                                        <li sec:authorize="hasAuthority('ADMIN')">
+                                            <a th:onclick="return confirm('are you sure ?')"
+                                               th:href="@{delete(id=${S.id},page=${currentPage},keyword=${keyword})}"
+                                               class="btn btn-outline-danger"
+                                            >
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </li>
+
+                                        <li sec:authorize="hasAuthority('ADMIN')">
+                                            <a
+                                                    th:href="@{editStudents(id=${S.id},page=${currentPage},keyword=${keyword})}"
+                                                    class="btn btn-outline-success">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6">
+                                <ul class="pagination visible-xs pull-right">
+
+                                    <li th:class="${status.index==currentPage?'active' : ''}"
+                                        th:each="page,status:${pages}">
+                                        <a
+                                                th:text="${status.index}"
+                                                th:href="@{index(page=${status.index},keyword=${keyword})}"
+                                        ></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

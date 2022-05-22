@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
+      layout:decorate="~{template.html}">
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="row rowPanel">
+            <div class="col-md-offset-1 col-md-9">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h1 class="text-center h1 display-5 text-white">Login</h1>
+                    </div>
+                    <form method="post" th:action="@{/login}">
+                        <div class="panel-body text-white">
+                            <div class="col-8 mx-auto">
+                                <div th:if="${#strings.length(ErrorMessage)>0}"
+                                     class="alert alert-warning alert-dismissible fade show my-3" role="alert">
+                                    <span th:text="${ErrorMessage}"></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="username" class="form-label fw-bold">Username</label>
+                                    <input type="text" name="username" class="form-control" id="username">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="password" class="form-label fw-bold">Password</label>
+                                    <input type="password" name="password" class="form-control" id="password">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-footer py-3">
+                            <button class="btn btn-light action-button d-block mx-auto px-4 py-2" type="submit">
+                                Login
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

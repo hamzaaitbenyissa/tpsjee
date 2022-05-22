@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="row rowPanel">
+            <div class="col-md-offset-1 col-md-9">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h1 class="text-center h1 display-5 text-white">Add Student</h1>
+                    </div>
+                    <form method="post" th:action="save">
+                        <div class="panel-body text-white">
+
+                            <div class="col-8 mx-auto">
+                                <div class="mb-3">
+                                    <label for="nom">Nom</label>
+                                    <input class="form-control" type="text" name="nom" id="nom"
+                                           th:value="${student.nom}">
+                                    <span th:errors="${student.nom}"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="nom">Prenom</label>
+                                    <input class="form-control" type="text" name="prenom" id="prenom"
+                                           th:value="${student.prenom}">
+                                    <span th:errors="${student.prenom}"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email">Email</label>
+                                    <input class="form-control" type="text" name="email" id="email"
+                                           th:value="${student.email}">
+                                    <span th:errors="${student.email}"></span>
+
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label for="Datenaissance">datenaissance</label>
+                                    <input class="form-control" type="date" name="Datenaissance" id="Datenaissance"
+                                           th:value="${student.datenaissance}">
+                                    <span th:errors="${student.datenaissance}"></span>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <select name="genre">
+                                        <option th:each="Genre : ${T(ma.enset.studentsmvc.entities.Genre).values()}"
+                                                th:text="${Genre}"></option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="enregle">En regle ?</label>
+                                    <input type="checkbox" name="enregle" id="enregle" th:checked="${student.enregle}">
+                                    <span th:errors="${student.enregle}"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="panel-footer py-3">
+                            <button class="btn btn-light action-button d-block mx-auto px-4 py-2" type="submit">
+                                Add
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

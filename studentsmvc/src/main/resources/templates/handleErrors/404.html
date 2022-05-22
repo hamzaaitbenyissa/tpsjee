@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
+      layout:decorate="~{template.html}">
+>
+<head>
+    <meta charset="UTF-8">
+    <title>404</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        h6{
+            color: red;
+            text-decoration: underline;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="w3-display-middle">
+        <h1 class="w3-jumbo w3-animate-top w3-center"><code>404</code></h1>
+        <hr class="w3-border-white w3-animate-left" style="margin:auto;width:50%">
+        <h3 class="w3-center w3-animate-right">it looks like you're lost... the page you are looking for is not found</h3>
+        <h3 class="w3-center w3-animate-zoom">🧐🧐🧐🧐</h3>
+        <h6 class="w3-center w3-animate-zoom">Erreur code:404 not found</h6>
+    </div>
+
+</div>
+</body>
+</html>

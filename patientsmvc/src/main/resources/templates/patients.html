@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+
+      layout:decorate="~{template.html}">
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Patients</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container mt-2">
+
+        <div class="card">
+            <div class="card-header align-content-center">
+                liste des patients
+            </div>
+
+            <div class="card-body">
+                <form action="get" th:action="@{index}">
+                    <label>keyword</label>
+                    <input th:value="${keyword}" type="text" name="keyword">
+                    <button type="submit" class="btn btn-primary">chercher</button>
+                </form>
+
+                <table class="table">
+                    <thead class="table-dark">
+                    <tr>
+                        <td></td>
+                        <td>Nom</td>
+                        <td>Date</td>
+                        <td>Malade</td>
+                        <td>Score</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="p:${patients}">
+                        <td th:text="${p.id}"></td>
+                        <td th:text="${p.nom}"></td>
+                        <td th:text="${p.datenaissance}"></td>
+                        <td th:text="${p.malade}"></td>
+                        <td th:text="${p.score}"></td>
+                        <td sec:authorize="hasAuthority('ADMIN')">
+                            <a th:onclick="return confirm('are you sure ?')"
+                               th:href="@{delete(id=${p.id},page=${currentPage},keyword=${keyword})}"
+                               class="btn btn-outline-danger"
+                            >
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+
+                        <td sec:authorize="hasAuthority('ADMIN')">
+                            <a
+                                    th:href="@{editPatients(id=${p.id},page=${currentPage},keyword=${keyword})}"
+                                    class="btn btn-outline-success">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+
+
+                    </tbody>
+                </table>
+
+                <ul class="nav nav-pills">
+                    <li class="me-1" th:each="page,status:${pages}">
+                        <a th:class="${status.index==currentPage?'btn btn-primary' : 'btn btn-outline-primary'}"
+                           th:text="${status.index}"
+                           th:href="@{index(page=${status.index},keyword=${keyword})}"
+                        ></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+</body>
+</html>
