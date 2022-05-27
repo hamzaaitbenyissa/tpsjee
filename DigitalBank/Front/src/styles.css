@@ -2,6 +2,7 @@
 
 body {
     background-image: url(./assets/images/endless-constellation.svg);
+    /*  background image use this color #330033 */
     color: #fff;
 }
 
@@ -17,7 +18,7 @@ html{
 }
 
 .panel {
-    background: linear-gradient(to right, #010508, #2c3e50);
+    background: linear-gradient(to right, #010508, #66215e);
     padding: 0;
     border-radius: 20px;
     margin-top: 10px;

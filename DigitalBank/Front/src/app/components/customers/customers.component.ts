@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { CustomerService } from 'src/app/services/customer.service';
+import { Customer } from './Customer';
 
 @Component({
   selector: 'app-customers',
@@ -9,21 +10,17 @@ import { CustomerService } from 'src/app/services/customer.service';
   styleUrls: ['./customers.component.css'],
 })
 export class CustomersComponent implements OnInit {
-  // customers: Customer[]=[];
-  customers: any;
-  pages: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
+  customers!: Observable<Array<Customer>>;
+  errorMessage: string = '';
 
-  constructor(private customerService : CustomerService) {}
+  pages: number[] = [];
+
+  constructor(private customerService: CustomerService) {}
   ngOnInit(): void {
-    this.customerService.getCustomers().subscribe({
-      next: (data) => {
-        this.customers = data;
-        console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    setTimeout(() => {
+    this.handleSearchCustomers();
+      
+    }, 500);
   }
 
   myForm = new FormGroup({
@@ -34,25 +31,40 @@ export class CustomersComponent implements OnInit {
     return this.myForm.controls;
   }
 
+  //handle searching event
+  handleSearchCustomers() {
+    this.customers = this.customerService
+      .searchCustomers(this.myForm.value.keyword)
+      .pipe(
+        catchError((err) => {
+          this.errorMessage = err.message;
+          return throwError(() => err);
+        })
+      );
+  }
+
   // handle delete  event
-  onDelete() {
-    confirm('Are you sure you want to delete');
-  }
-
-  // handle edit event
-  onEdit() {
-    confirm('Are you sure you want to edit it ');
-  }
-
-  //submit search
-  submit() {
-    this.customerService.searchCustomers(this.myForm.value.keyword).subscribe({
-      next: (data) => {
-        this.customers = data;
+  onDeleteCustomer(c: Customer) {
+    let conf = confirm('Are you sure want to delete it?');
+    if (!conf) return;
+    this.customerService.deleteCustomer(c.id).subscribe({
+      next: (resp) => {
+        this.customers = this.customers.pipe(
+          map((data) => {
+            let index = data.indexOf(c);
+            data.slice(index, 1);
+            return data;
+          })
+        );
       },
       error: (err) => {
         console.log(err);
       },
     });
+  }
+
+  // handle edit event
+  onEditCustomer() {
+    confirm('Are you sure you want to edit it ');
   }
 }

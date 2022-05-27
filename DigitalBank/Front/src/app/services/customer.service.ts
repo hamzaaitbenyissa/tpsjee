@@ -10,17 +10,21 @@ import { Customer } from '../components/customers/Customer';
 export class CustomerService {
   constructor(private http: HttpClient) {}
 
-  public getCustomers(): Observable<Array<Customer>> {
+  public searchCustomers(keyword: String): Observable<Array<Customer>> {
     return this.http.get<Array<Customer>>(
-      environment.backendServer + '/customers'
+      environment.backendServer + '/customers/search/?keyword=' + keyword
     );
   }
-
-  public searchCustomers(keyword:String): Observable<Array<Customer>> {
-    return this.http.get<Array<Customer>>(
-      environment.backendServer + "/customers/search/?keyword="+keyword
+  // add a new customer
+  public addCustomer(customer: Customer): Observable<Customer> {
+    return this.http.post<Customer>(
+      environment.backendServer + '/customers',
+      customer
     );
   }
-
-
+  
+  // delete an user
+  public deleteCustomer(id: number) {
+    return this.http.delete(environment.backendServer + '/customers/' + id);
+  }
 }

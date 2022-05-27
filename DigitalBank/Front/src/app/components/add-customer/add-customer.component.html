@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row rowPanel">
+        <div class="col-md-offset-1 col-md-9">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h1 class="text-center h1 display-5 text-white">Add Customer</h1>
+                </div>
+                <form method="post" [formGroup]="myForm" (ngSubmit)="submit()">
+                    <div class="panel-body text-white">
+
+                        <div class="col-8 mx-auto">
+
+                            <div class="mb-3">
+                                <label for="firstName">firstName</label>
+                                <input class="form-control" name="firstName" id="firstName" formControlName="firstName"
+                                    type="text">
+                                <div *ngIf="f.firstName.touched && f.firstName.invalid" class="alert alert-danger">
+                                    <div *ngIf="f.firstName.errors && f.firstName.errors.required">firstName is
+                                        required.</div>
+                                    <div *ngIf="f.firstName.errors && f.firstName.errors.minlength">firstName
+                                        should be at least 4 characters.</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="firstName">lastName</label>
+                                <input class="form-control" name="lastName" id="lastName" formControlName="lastName"
+                                    type="text">
+                                <div *ngIf="f.lastName.touched && f.lastName.invalid" class="alert alert-danger">
+                                    <div *ngIf="f.lastName.errors && f.lastName.errors.required">lastName is
+                                        required.</div>
+                                    <div *ngIf="f.lastName.errors && f.lastName.errors.minlength">lastName
+                                        should be at least 4 characters.</div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email">email</label>
+                                <input class="form-control" name="email" id="emaiemaill" formControlName="email"
+                                    type="text">
+                                <div *ngIf="f.email.touched && f.email.invalid" class="alert alert-danger">
+                                    <div *ngIf="f.email.errors && f.email.errors.required">email is
+                                        required.</div>
+                                    <div *ngIf="f.email.errors && f.email.errors.email">email
+                                        should be at least 4 characters.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer py-3">
+                        <button [disabled]="!this.myForm.valid" class="btn btn-light action-button d-block mx-auto px-4 py-2" type="submit">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

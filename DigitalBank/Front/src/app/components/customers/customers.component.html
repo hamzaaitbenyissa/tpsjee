@@ -1,90 +1,109 @@
-<div class="container">
-    <div class="row rowPanel">
-        <div class="col-md-offset-1 col-md-12">
-            <div class="panel">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-sm-9 col-xs-12 text-right">
-                            <div class="btn_group">
-                                <form [formGroup]="myForm" (ngSubmit)="submit()">
-                                    <input placeholder="Search" name="keyword" id="keyword" formControlName="keyword"
-                                        type="text" class="form-control" />
-                                    <button class="btn btn-default" type="submit" title="search">
-                                        <i class="bi bi-search"></i>
-                                    </button>
-                                </form>
+<ng-container *ngIf="customers; else failureOrLading">
+    <div class="container">
+        <div class="row rowPanel">
+            <div class="col-md-offset-1 col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-9 col-xs-12 text-right">
+                                <div class="btn_group">
+                                    <form [formGroup]="myForm" (ngSubmit)="handleSearchCustomers()">
+                                        <input placeholder="Search" name="keyword" id="keyword"
+                                            formControlName="keyword" type="text" class="form-control" />
+                                        <button class="btn btn-default" type="submit" title="search">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col col-sm-3 col-xs-12">
-                            <h4 class="AddSection">
-                                <a [routerLink]="['/addcustomer']">
-                                    Add customer <i class="bi bi-person-plus"></i></a>
-                            </h4>
+                            <div class="col col-sm-3 col-xs-12">
+                                <h4 class="AddSection">
+                                    <a [routerLink]="['/addcustomer']">
+                                        Add customer <i class="bi bi-person-plus"></i></a>
+                                </h4>
+                            </div>
+
                         </div>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table class="table" style="text-align:center">
+                            <thead>
+                                <tr>
+
+                                    <th>ID</th>
+                                    <th>firstName</th>
+                                    <th>lastName</th>
+                                    <th>email</th>
+                                    <th>Actions</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr *ngFor="let customer of customers | async">
+                                    <td>{{customer.id}}</td>
+                                    <td>{{customer.firstName}}</td>
+                                    <td>{{customer.lastName}}</td>
+                                    <td>{{customer.email}}</td>
+                                    <td>
+                                        <ul class="action-list">
+
+                                            <li>
+                                                <a (click)="onDeleteCustomer(customer)" class="btn btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </a>
+                                            </li>
+
+                                            <!-- <li>
+                                                <a (click)="onEditCustomer()" class="btn btn-outline-success">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+                                            </li> -->
+
+                                        </ul>
+                                    </td>
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+
+
 
                     </div>
-                </div>
-                <div class="panel-body table-responsive">
-                    <table class="table" style="text-align:center">
-                        <thead>
-                            <tr>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-6 col-xs-6">
+                                <ul class="pagination visible-xs pull-right">
+                                    <li [ngClass]="{'active': page==2 }" *ngFor="let page of pages">
+                                        <a [routerLink]="['/customers/' + page]">
+                                            {{ page}}
+                                        </a>
+                                    </li>
 
-                                <th>ID</th>
-                                <th>firstName</th>
-                                <th>lastName</th>
-                                <th>email</th>
-                                <th>Actions</th>
+                                </ul>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let customer of customers">
-                                <td>{{customer.id}}</td>
-                                <td>{{customer.firstName}}</td>
-                                <td>{{customer.lastName}}</td>
-                                <td>{{customer.email}}</td>
-                                <td>
-                                    <ul class="action-list">
-
-                                        <li>
-                                            <a (click)="onDelete()" [routerLink]="['/delete']"
-                                                class="btn btn-outline-danger">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a (click)="onEdit()" [routerLink]="['/edit']"
-                                                class="btn btn-outline-success">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </td>
-                            </tr>
-
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-sm-6 col-xs-6">
-                            <ul class="pagination visible-xs pull-right">
-                                <li [ngClass]="{'active': page==2 }" *ngFor="let page of pages">
-                                    <a [routerLink]="['/customers/' + page]">
-                                    {{ page}}
-                                    </a>
-                                </li>
-
-                            </ul>
-
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+</ng-container>
+
+<ng-template #failureOrLading>
+    <ng-container *ngIf="errorMessage; else loading">
+        <div class="text-danger container">
+            {{errorMessage}}
+        </div>
+    </ng-container>
+    <ng-template #loading>
+        <h1 class="container">
+            Loading ......
+        </h1>
+    </ng-template>
+</ng-template>
