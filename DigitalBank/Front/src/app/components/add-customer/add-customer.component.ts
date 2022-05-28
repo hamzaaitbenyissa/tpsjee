@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
-import { Customer } from '../customers/Customer';
+import { Customer } from '../../models/Customer';
 
 @Component({
   selector: 'app-add-customer',
