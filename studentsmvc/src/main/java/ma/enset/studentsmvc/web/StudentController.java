@@ -11,8 +11,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -20,13 +22,6 @@ public class StudentController {
 
     private StudentRepository studentRepository;
 
-    //     redirect to index page
-    @GetMapping(path = "/")
-    public String home() {
-        return "redirect:/index";
-    }
-
-//    the home page that contain students list
     @GetMapping(path = "/index")
     public String Student(Model model,
                           @RequestParam(name = "page", defaultValue = "0") int page,
@@ -40,34 +35,28 @@ public class StudentController {
         return "students";
     }
 
-    //delete a student
+
+
+
     @GetMapping(path = "/delete")
     public String delete(Long id, String keyword, int page) {
         studentRepository.deleteById(id);
         return "redirect:/index?page=" + page + "&keyword=" + keyword;
     }
 
+    @GetMapping(path = "/")
+    public String home() {
+        return "redirect:/index";
+    }
 
-
-    //    a form to add students
+//    a form to add students
     @GetMapping(path = "/formStudents")
     public String formStudents(Model model) {
         model.addAttribute("student", new Student());
         return "formStudents";
     }
 
-    //   a form to update students
-    @GetMapping(path = "/editStudents")
-    public String editStudents(Model model, Long id, String keyword, int page) {
-        Student student = studentRepository.findById(id).orElse(null);
-        if (student == null) throw new RuntimeException("student introuvable");
-        model.addAttribute("student", student);
-        model.addAttribute("page", page);
-        model.addAttribute("keyword", keyword);
-        return "editStudents";
-    }
 
-    //save the new student that we created in the form above with error validation
     @PostMapping(path = "/save")
     public String save(Long id, @RequestParam(name = "keyword", defaultValue = "") String keyword,
                        @RequestParam(name = "page", defaultValue = "0") int page,
@@ -76,6 +65,19 @@ public class StudentController {
         if (bindingResult.hasErrors()) return "formStudents";
         studentRepository.save(student);
         return "redirect:/index?page=" + page + "&keyword=" + keyword;
+    }
+
+
+
+//    a form to update students
+    @GetMapping(path = "/editStudents")
+    public String editStudents(Model model, Long id, String keyword, int page) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if (student == null) throw new RuntimeException("student introuvable");
+        model.addAttribute("student", student);
+        model.addAttribute("page",page);
+        model.addAttribute("keyword",keyword);
+        return "editStudents";
     }
 
 

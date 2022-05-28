@@ -1,14 +1,9 @@
 
 body {
     /*background-color: #2980b9;*/
-    background: url(/img/amphi.jpg);
+    background: url(/img/amphi2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-html{
-    position: relative; /* Allows the footer to notice content height */
-    min-height: 100vh;  /* My page will always take the full screen */
 }
 
 .demo {

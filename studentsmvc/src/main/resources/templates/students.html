@@ -36,7 +36,7 @@
 
                             <div sec:authorize="hasAuthority('ADMIN')" class="col col-sm-3 col-xs-12">
                                 <h4 class="AddSection">
-                                    <a th:href="@{formStudents}">
+                                    <a  th:href="@{formStudents}">
                                         Add Student <i
                                             class="bi bi-person-plus"></i></a>
                                 </h4>
@@ -57,31 +57,31 @@
                                 <th>Date Naissance</th>
                                 <th>Genre</th>
                                 <th>est en regle?</th>
-                                <th sec:authorize="hasAuthority('ADMIN')">Actions</th>
+                                <th sec:authorize="hasAuthority('ADMIN')" >Actions</th>
 
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="S:${students}">
-                                <td th:text="${S.id}"></td>
-                                <td th:text="${S.nom}"></td>
-                                <td th:text="${S.prenom}"></td>
-                                <td th:text="${S.email}"></td>
-                                <td th:text="${S.datenaissance}"></td>
+                            <tr th:each="p:${students}">
+                                <td th:text="${p.id}"></td>
+                                <td th:text="${p.nom}"></td>
+                                <td th:text="${p.prenom}"></td>
+                                <td th:text="${p.email}"></td>
+                                <td th:text="${p.datenaissance}"></td>
                                 <td>
                                     <span style="font-size: 1.3em;"
-                                          th:if=" ${S.getGenre().name()}=='MASCULIN'">👨‍🎓</span>
+                                          th:if=" ${p.getGenre().name()}=='MASCULIN'">👨‍🎓</span>
                                     <span style="font-size: 1.3em;"
-                                          th:if="${S.getGenre().name()}=='FEMININ'">👩‍🎓 </span>
+                                          th:if="${p.getGenre().name()}=='FEMININ'">👩‍🎓 </span>
                                 </td>
-                                <td style="font-size: 1.3em;" th:text="${S.enregle}? '✔' : '❌'"></td>
+                                <td style="font-size: 1.3em;" th:text="${p.enregle}? '✔' : '❌'"></td>
 
                                 <td>
                                     <ul class="action-list">
 
                                         <li sec:authorize="hasAuthority('ADMIN')">
                                             <a th:onclick="return confirm('are you sure ?')"
-                                               th:href="@{delete(id=${S.id},page=${currentPage},keyword=${keyword})}"
+                                               th:href="@{delete(id=${p.id},page=${currentPage},keyword=${keyword})}"
                                                class="btn btn-outline-danger"
                                             >
                                                 <i class="bi bi-trash"></i>
@@ -90,7 +90,7 @@
 
                                         <li sec:authorize="hasAuthority('ADMIN')">
                                             <a
-                                                    th:href="@{editStudents(id=${S.id},page=${currentPage},keyword=${keyword})}"
+                                                    th:href="@{editStudents(id=${p.id},page=${currentPage},keyword=${keyword})}"
                                                     class="btn btn-outline-success">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
@@ -116,7 +116,9 @@
                                                 th:href="@{index(page=${status.index},keyword=${keyword})}"
                                         ></a>
                                     </li>
+
                                 </ul>
+
                             </div>
                         </div>
                     </div>

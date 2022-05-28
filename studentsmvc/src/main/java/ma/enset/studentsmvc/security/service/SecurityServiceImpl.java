@@ -61,12 +61,20 @@ public class SecurityServiceImpl implements SecurityService {
 
         AppRole appRole = appRoleRepository.findByRoleName(roleName);
         if (appRole == null) throw new RuntimeException("Role Not found!");
+
         appUser.getAppRoles().add(appRole);
+
     }
 
+    @Override
+    public void removeRoleFromUser(String userName, String roleName) {
+
+
+    }
 
     @Override
     public AppUser loadUserByUserName(String userName) {
+
         return appUserRepository.findByUsername(userName);
     }
 }
