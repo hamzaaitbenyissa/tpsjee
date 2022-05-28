@@ -51,7 +51,7 @@ public class OperationServiceImpl implements OperationService {
             throw new BankAccountNotFoundException("Bank Account Not Found");
         }
 
-        Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId, PageRequest.of(page, size));
+        Page<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountIdOrderByDateDesc(accountId, PageRequest.of(page, size));
         AccountHistoryDTO accountHistoryDTO = new AccountHistoryDTO();
         List<AccountOperationDTO> accountOperationDTOS = accountOperations.getContent().stream().map(op -> bankAccountMapper.fromAccountOperation(op)).collect(Collectors.toList());
         accountHistoryDTO.setAccountOperationDTOS(accountOperationDTOS);
@@ -67,7 +67,9 @@ public class OperationServiceImpl implements OperationService {
     //debit operation
     @Override
     public void debit(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficientException {
-        BankAccount bankAccount = bankAccountMapper.fromBankAccountDTO(bankAccountService.getBankAccount(accountId));
+        BankAccount bankAccount=bankAccountRepository.findById(accountId)
+                .orElseThrow(()->new BankAccountNotFoundException("BankAccount not found"));
+
         if (bankAccount.getBalance() < amount) throw new BalanceNotSufficientException("Balance not sufficient");
         AccountOperation accountOperation = new AccountOperation();
         accountOperation.setType(OperationType.DEBIT);
@@ -83,8 +85,8 @@ public class OperationServiceImpl implements OperationService {
     //credit operation
     @Override
     public void credit(String accountId, double amount, String description) throws BankAccountNotFoundException {
-        BankAccount bankAccount = bankAccountMapper.fromBankAccountDTO(bankAccountService.getBankAccount(accountId));
-
+        BankAccount bankAccount=bankAccountRepository.findById(accountId)
+                .orElseThrow(()->new BankAccountNotFoundException("BankAccount not found"));
         AccountOperation accountOperation = new AccountOperation();
         accountOperation.setType(OperationType.CREDIT);
         accountOperation.setAmount(amount);
@@ -102,6 +104,9 @@ public class OperationServiceImpl implements OperationService {
         debit(accountIdSource, amount, "Transfer to " + accountIdDest);
         credit(accountIdDest, amount, "Transfer from " + accountIdSource);
     }
+
+
+
 
 
 }

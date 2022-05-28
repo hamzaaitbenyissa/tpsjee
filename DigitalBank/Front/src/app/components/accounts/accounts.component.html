@@ -23,7 +23,7 @@
 
                         <div class="mb-2">
                             <h6 class="text-center display-5 text-white">
-                                Balance : <strong>{{accountDetails.balance | number : '1.2-2'}} $ </strong>
+                                Balance : <strong>{{accountDetails.balance | currency }} </strong>
                             </h6>
                         </div>
                         <table class="table" style="text-align:center">
@@ -42,7 +42,7 @@
                                     <td>{{op.id}}</td>
                                     <td>{{op.date | date : 'dd-MM-yyyy:HH-mm-ss'}}</td>
                                     <td>{{op.type}}</td>
-                                    <td>{{op.amount | number : '1.2-2'}}</td>
+                                    <td>{{op.amount | currency }}</td>
                                 </tr>
                             </tbody>
                         </table>

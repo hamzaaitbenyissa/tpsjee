@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AccountDetails } from 'src/app/models/Account';
 import { AccountService } from 'src/app/services/account.service';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-accounts',
@@ -61,22 +63,44 @@ export class AccountsComponent implements OnInit {
     if (operationType == 'DEBIT') {
       this.accountService.debit(accountId, amount, description).subscribe({
         next: (data) => {
-          alert('Success Credit');
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'The Operation has been successful',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.operationFromGroup.reset();
           this.handleSearchAccount();
         },
         error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
           console.log(err);
         },
       });
     } else if (operationType == 'CREDIT') {
       this.accountService.credit(accountId, amount, description).subscribe({
         next: (data) => {
-          alert('Success Debit');
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'The Operation has been successful',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.operationFromGroup.reset();
           this.handleSearchAccount();
         },
         error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
           console.log(err);
         },
       });
@@ -85,11 +109,22 @@ export class AccountsComponent implements OnInit {
         .transfer(accountId, accountDestination, amount, description)
         .subscribe({
           next: (data) => {
-            alert('Success Transfer');
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'The Operation has been successful',
+              showConfirmButton: false,
+              timer: 1500
+            })
             this.operationFromGroup.reset();
             this.handleSearchAccount();
           },
           error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
             console.log(err);
           },
         });
