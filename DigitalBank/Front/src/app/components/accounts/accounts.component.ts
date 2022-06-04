@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AccountDetails } from 'src/app/models/Account';
 import { AccountService } from 'src/app/services/account.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 import Swal from 'sweetalert2';
 
 
@@ -21,10 +23,16 @@ export class AccountsComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private tokenStorage: TokenStorageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    if (!this.tokenStorage.getToken()) {
+      this.router.navigate(['/login']);
+    } else {
+
     this.accountFormGroup = this.fb.group({
       accountId: this.fb.control(''),
     });
@@ -34,6 +42,7 @@ export class AccountsComponent implements OnInit {
       description: this.fb.control(null),
       accountDestination: this.fb.control(null),
     });
+    }
   }
 
   handleSearchAccount() {

@@ -4,6 +4,8 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Customer } from '../../models/Customer';
 import Swal from 'sweetalert2';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -14,13 +16,21 @@ export class CustomersComponent implements OnInit {
   customers!: Observable<Array<Customer>>;
   errorMessage: string = '';
 
-  pages: number[] = [1,2];
+  pages: number[] = [1, 2];
 
-  constructor(private customerService: CustomerService) {}
+  constructor(
+    private customerService: CustomerService,
+    private tokenStorage: TokenStorageService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
-    setTimeout(() => {
-      this.handleSearchCustomers();
-    }, 500);
+    if (!this.tokenStorage.getToken()) {
+      this.router.navigate(['/login']);
+    } else {
+      setTimeout(() => {
+        this.handleSearchCustomers();
+      }, 500);
+    }
   }
 
   myForm = new FormGroup({

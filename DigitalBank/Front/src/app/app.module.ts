@@ -9,8 +9,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
-import { HomeComponent } from './components/home/home.component';
 import { AddCustomerComponent } from './components/add-customer/add-customer.component';
+import { LoginComponent } from './components/login/login.component';
+import { authInterceptorProviders } from './helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,8 +20,8 @@ import { AddCustomerComponent } from './components/add-customer/add-customer.com
     FooterComponent,
     CustomersComponent,
     AccountsComponent,
-    HomeComponent,
-    AddCustomerComponent
+    AddCustomerComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +30,7 @@ import { AddCustomerComponent } from './components/add-customer/add-customer.com
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
