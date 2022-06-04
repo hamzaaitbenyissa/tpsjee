@@ -14,3 +14,11 @@ export interface AccountOperation {
   type: string;
   description: string;
 }
+
+  export interface BankAccount {
+      id: string;
+      type: string;
+      balance: number;
+      createdAt: Date;
+  }
+

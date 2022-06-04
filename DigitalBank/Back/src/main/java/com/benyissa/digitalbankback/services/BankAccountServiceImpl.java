@@ -43,6 +43,20 @@ public class BankAccountServiceImpl implements BankAccountService {
         }).collect(Collectors.toList());
     }
 
+    //get bank acoounts of a costumer
+    @Override
+    public List<BankAccountDTO> listBankAccountsOfCustomer(Long id) {
+        return bankAccountRepository.getBankAccountByCustomer_Id(id).stream().map(bankAccount -> {
+            if (bankAccount instanceof SavingAccount) {
+                SavingAccount savingAccount = (SavingAccount) bankAccount;
+                return bankAccountMapper.fromSavingAccount(savingAccount);
+            } else {
+                CurrentAccount currentAccount = (CurrentAccount) bankAccount;
+                return bankAccountMapper.fromCurrentAccount(currentAccount);
+            }
+        }).collect(Collectors.toList());
+    }
+
     //return a BankAccount using id
     @Override
     public BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException {

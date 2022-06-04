@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AccountDetails } from 'src/app/models/Account';
+import { AccountDetails, BankAccount } from 'src/app/models/Account';
 import { AccountService } from 'src/app/services/account.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-accounts',
@@ -20,28 +19,32 @@ export class AccountsComponent implements OnInit {
   accountObservable!: Observable<AccountDetails>;
   operationFromGroup!: FormGroup;
   errorMessage!: string;
+  account!: BankAccount;
 
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
     private tokenStorage: TokenStorageService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.account = this.router.getCurrentNavigation()?.extras
+      .state as BankAccount;
+  }
 
   ngOnInit(): void {
     if (!this.tokenStorage.getToken()) {
       this.router.navigate(['/login']);
     } else {
-
-    this.accountFormGroup = this.fb.group({
-      accountId: this.fb.control(''),
-    });
-    this.operationFromGroup = this.fb.group({
-      operationType: this.fb.control(null),
-      amount: this.fb.control(0),
-      description: this.fb.control(null),
-      accountDestination: this.fb.control(null),
-    });
+      this.accountFormGroup = this.fb.group({
+        accountId: this.fb.control(this.account.id ? this.account.id : ''),
+      });
+      this.operationFromGroup = this.fb.group({
+        operationType: this.fb.control(null),
+        amount: this.fb.control(0),
+        description: this.fb.control(null),
+        accountDestination: this.fb.control(null),
+      });
     }
   }
 
@@ -77,8 +80,8 @@ export class AccountsComponent implements OnInit {
             icon: 'success',
             title: 'The Operation has been successful',
             showConfirmButton: false,
-            timer: 1500
-          })
+            timer: 1500,
+          });
           this.operationFromGroup.reset();
           this.handleSearchAccount();
         },
@@ -87,7 +90,7 @@ export class AccountsComponent implements OnInit {
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
-          })
+          });
           console.log(err);
         },
       });
@@ -99,8 +102,8 @@ export class AccountsComponent implements OnInit {
             icon: 'success',
             title: 'The Operation has been successful',
             showConfirmButton: false,
-            timer: 1500
-          })
+            timer: 1500,
+          });
           this.operationFromGroup.reset();
           this.handleSearchAccount();
         },
@@ -109,7 +112,7 @@ export class AccountsComponent implements OnInit {
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
-          })
+          });
           console.log(err);
         },
       });
@@ -123,8 +126,8 @@ export class AccountsComponent implements OnInit {
               icon: 'success',
               title: 'The Operation has been successful',
               showConfirmButton: false,
-              timer: 1500
-            })
+              timer: 1500,
+            });
             this.operationFromGroup.reset();
             this.handleSearchAccount();
           },
@@ -133,7 +136,7 @@ export class AccountsComponent implements OnInit {
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
-            })
+            });
             console.log(err);
           },
         });

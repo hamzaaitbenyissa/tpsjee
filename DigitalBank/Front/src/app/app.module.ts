@@ -12,6 +12,7 @@ import { AccountsComponent } from './components/accounts/accounts.component';
 import { AddCustomerComponent } from './components/add-customer/add-customer.component';
 import { LoginComponent } from './components/login/login.component';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
+import { CustomerAccountsComponent } from './components/customer-accounts/customer-accounts.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { authInterceptorProviders } from './helpers/auth.interceptor';
     CustomersComponent,
     AccountsComponent,
     AddCustomerComponent,
-    LoginComponent
+    LoginComponent,
+    CustomerAccountsComponent
   ],
   imports: [
     BrowserModule,

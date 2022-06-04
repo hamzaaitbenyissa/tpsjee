@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
+import Swal from 'sweetalert2';
 import { Customer } from '../../models/Customer';
 
 @Component({
@@ -36,9 +37,17 @@ export class AddCustomerComponent implements OnInit {
     let customer:Customer=this.myForm.value;
     this.customerService.addCustomer(customer).subscribe({
       next : data=>{
-        alert("Customer added successfully");
-        this.myForm.reset();
-        this.router.navigateByUrl("/customers");
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Customer added successfully',
+          showConfirmButton: false,
+          timer: 1000
+        })
+        setTimeout(() => {
+          this.myForm.reset();
+          this.router.navigateByUrl("/customers");
+        }, 1100);
       },
       error : err => {
         console.log(err);

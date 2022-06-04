@@ -90,4 +90,11 @@ export class CustomersComponent implements OnInit {
   onEditCustomer() {
     confirm('Are you sure you want to edit it ');
   }
+
+  // check the costumer accounts 
+  checkCustomerAccounts(customer: Customer) {
+    console.log("clicked ")
+    this.router.navigateByUrl("/customer-accounts/"+customer.id);
+  }
+
 }

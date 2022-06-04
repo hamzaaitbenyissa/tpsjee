@@ -1,6 +1,8 @@
 package com.benyissa.digitalbankback.web;
 
+import com.benyissa.digitalbankback.DTOs.BankAccountDTO;
 import com.benyissa.digitalbankback.DTOs.CustomerDTO;
+import com.benyissa.digitalbankback.services.BankAccountService;
 import com.benyissa.digitalbankback.services.CostumerService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +19,8 @@ import java.util.List;
 public class CustomerRestController {
 
     private CostumerService costumerService;
+    private BankAccountService bankAccountService;
+
 
     //    return all costumers
     @GetMapping("/customers")
@@ -27,10 +31,8 @@ public class CustomerRestController {
     @GetMapping("/customers/search")
     public List<CustomerDTO> searchCustomers(
             @RequestParam(name = "keyword", defaultValue = "") String keyword) {
-        return costumerService.searchCustomers(""+keyword);
+        return costumerService.searchCustomers("" + keyword);
     }
-
-
 
 
     //    return a specific costumer using its id
@@ -59,7 +61,11 @@ public class CustomerRestController {
 
     }
 
-
+    //get bank accounts of costumer
+    @GetMapping("/customer/{id}/accounts")
+    public List<BankAccountDTO> banksOfCustomer(@PathVariable(name = "id") Long customerid) {
+        return bankAccountService.listBankAccountsOfCustomer(customerid);
+    }
 
 
 }

@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public  class BankAccountDTO {
+public class BankAccountDTO {
     private String type;
     private String id;
     private Double balance;
@@ -20,7 +20,4 @@ public  class BankAccountDTO {
     private String currency;
     private AccountStatus status;
     private CustomerDTO customerDTO;
-
-
-
 }

@@ -20,13 +20,8 @@
                             <div class="mb-3">
                                 <label for="password" class="form-label fw-bold">Password</label>
                                 <input type="password" class="form-control" name="password" [(ngModel)]="form.password"
-                                    required minlength="3" #password="ngModel" />
-                                <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
-                                    <div *ngIf="password.errors.required">Password is required</div>
-                                    <div *ngIf="password.errors.minlength">
-                                        Password must be at least 6 characters
-                                    </div>
-                                </div>
+                                    #password="ngModel" />
+
                             </div>
                         </div>
 
@@ -39,7 +34,7 @@
 
                     <div class="mb-3">
                         <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
-                            Login failed: {{ errorMessage }}
+                            Username or password is incorrect!
                         </div>
                     </div>
 

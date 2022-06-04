@@ -32,9 +32,9 @@
                                 <tr>
 
                                     <th>ID</th>
-                                    <th>firstName</th>
-                                    <th>lastName</th>
-                                    <th>email</th>
+                                    <th>FirstName</th>
+                                    <th>LastName</th>
+                                    <th>Email</th>
                                     <th>Actions</th>
 
                                 </tr>
@@ -61,6 +61,18 @@
                                                 </a>
                                             </li> -->
 
+
+                                            <li>
+                                                <a (click)="checkCustomerAccounts(customer)" class="btn btn-outline-primary">
+                                                   Accounts
+                                                </a>
+                                               
+                                                
+                                            </li>
+
+
+
+
                                         </ul>
                                     </td>
                                 </tr>
@@ -73,21 +85,6 @@
 
 
                     </div>
-                    <!-- <div class="panel-footer">
-                        <div class="row">
-                            <div class="col-sm-6 col-xs-6">
-                                <ul class="pagination visible-xs pull-right">
-                                    <li [ngClass]="{'active': page==2 }" *ngFor="let page of pages">
-                                        <a [routerLink]="['/customers/' + page]">
-                                            {{ page}}
-                                        </a>
-                                    </li>
-
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>

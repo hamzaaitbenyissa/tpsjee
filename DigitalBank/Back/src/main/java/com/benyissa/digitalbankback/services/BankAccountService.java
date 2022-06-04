@@ -16,6 +16,9 @@ public interface BankAccountService {
 
     List<BankAccountDTO> listBankAccounts();
 
+    List<BankAccountDTO> listBankAccountsOfCustomer(Long id);
+
+
     BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
 
 }
