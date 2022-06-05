@@ -1,4 +1,4 @@
-import 'package:digitalbank/pages/customers/Customer.dart';
+import 'package:digitalbank/models/Customer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 
@@ -10,7 +10,8 @@ class CustomerDeatils extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(customer.firstName),
+          title: Text(customer.firstName + customer.lastName),
+          centerTitle: true
         ),
         body: SafeArea(
             child: Column(children: [
